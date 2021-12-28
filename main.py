@@ -4,27 +4,11 @@ This code was created for the Project Shaking Hands Overseas with the purpose of
 of the ocean. Any questions feel free to ask.
 """
 from src import *
-print('Arduino Serial Sender & Receiver \n Author: @Newtoniano20 (Joel Garcia) \n Github: https://github.com/Shaking-Hands-Overseas/Arduino-Serial-Sender \n')
-
-
-def ask_user():
-    x = True
-    choice = None
-    while x:
-        print('Specify whether you want to be a sender or a receiver.\n [0] Sender \n [1] Receiver')
-        try:
-            choice = int(input('\n Input:'))
-        except Exception:
-            pass
-        if choice == 0 or choice == 1:
-            break
-        else:
-            print(f'{bcolors.WARNING}[ERROR] Invalid Input{bcolors.ENDC}')
-            pass
-    return choice
+print(f'{bcolors.HEADER}Arduino Serial Sender & Receiver{bcolors.ENDC} \n {bcolors.OKCYAN}Author: @Newtoniano20 (Joel Garcia) {bcolors.ENDC}\n {bcolors.OKGREEN}Github: https://github.com/Shaking-Hands-Overseas/Arduino-Serial-COM {bcolors.ENDC}\n')
 
 
 def main():
+    ard = None
     choice = ask_user()
     if choice == 0:
         print(f"{bcolors.OKCYAN}[INFO] You have chosen Sender{bcolors.ENDC}")
@@ -37,7 +21,10 @@ def main():
             ard = arduino_connect(int(selection), BAUDRATE)
             i = False
         except Exception:
-            print(f"{bcolors.WARNING}[ERROR] Arduino not connected to Serial port {SERIAL_PORTS[int(selection)]}{bcolors.ENDC}")
+            try:
+                print(f"{bcolors.WARNING}[ERROR] Arduino not connected to Serial port {SERIAL_PORTS[int(selection)]}{bcolors.ENDC}")
+            except Exception:
+                pass
             selection = ask_user_port()
 
     if choice == 0:
