@@ -1,4 +1,4 @@
-# Arduino-Serial-Sender-Reciever
+# Arduino-Serial-COM
 This code is what allows the connection between the Arduino and Computer. This can send and recieve information to a server.
 
 ## Important Information:
