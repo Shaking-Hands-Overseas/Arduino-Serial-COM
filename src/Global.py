@@ -1,3 +1,7 @@
+"""
+Functions which are used both in Sender and Receiver
+"""
+
 from serial import Serial
 from .Var import *
 

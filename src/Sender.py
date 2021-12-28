@@ -43,6 +43,8 @@ class Sender:
                 req_response = post(url=URL_S, json=self.Sender_data)
                 sleep(0.1)
                 print(req_response)
+            except (KeyboardInterrupt, SystemExit):
+                raise
             except Exception:
                 print(f"{bcolors.WARNING}[ERROR] Server {URL_R} not responding to request{bcolors.ENDC}")
             sleep(0.2)
@@ -51,6 +53,8 @@ class Sender:
         while True:
             try:
                 data = arduino_read(self.ard)
+            except (KeyboardInterrupt, SystemExit):
+                raise
             except Exception:
                 print(f"{bcolors.WARNING}[ERROR] Arduino not connected to port {SERIAL_PORTS[int(self.selection)]}{bcolors.ENDC}")
                 self.ard = arduino_connect(int(self.selection), BAUDRATE)
@@ -58,6 +62,8 @@ class Sender:
                 data2 = data.split()
                 self.Sender_data = {"s1": int(data2[0]), "s2": int(data2[1]), "s3": int(data2[2]), "s4": int(data2[3]), "s5": int(data2[4])}
                 print(self.Sender_data)
+            except (KeyboardInterrupt, SystemExit):
+                raise
             except Exception:
                 pass
             sleep(0.1)
