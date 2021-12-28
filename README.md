@@ -1,5 +1,5 @@
 # Arduino-Serial-COM
-This code is what allows the connection between the Arduino and Computer. This can send and recieve information to a server.
+This code allows the connection between the Arduino a Computer and a server. This code can send and recieve information.
 
 ## Important Information:
 I recommend using my arduino Firmware, but feel free to use whatever you prefer. But in the case of creating your own firmware, it's key to understand that the data will only be sent (This applies to the sender Only) if the computer sends the letter "A" and then will respond the Arduino. So then have in mind dealing with this
