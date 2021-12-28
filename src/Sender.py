@@ -45,7 +45,7 @@ class Sender:
                 print(req_response)
             except Exception:
                 print(f"{bcolors.WARNING}[ERROR] Server {URL_R} not responding to request{bcolors.ENDC}")
-            sleep(0.4)
+            sleep(0.2)
 
     def sender_arduino(self):
         while True:

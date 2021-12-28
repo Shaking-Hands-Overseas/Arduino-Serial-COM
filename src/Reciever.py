@@ -79,11 +79,11 @@ class Receiver:
             try:
                 value = self.write_read(num)
                 print(f"[DATA] Data received Back was: {value}")
-            except:
+            except Exception:
                 print(f"{bcolors.WARNING}[ERROR] Error while sending data to arduino in port {SERIAL_PORTS[int(self.selection)]}{bcolors.ENDC}")
                 try:
                     self.ard = arduino_connect(int(self.selection), BAUDRATE)
-                except:
+                except Exception:
                     self.i += 1
                     if self.i > 10:
                         print('\n\n')
@@ -92,5 +92,5 @@ class Receiver:
                         try:
                             self.ard = arduino_connect(int(self.selection), BAUDRATE)
                             self.ser = True
-                        except:
+                        except Exception:
                             pass
