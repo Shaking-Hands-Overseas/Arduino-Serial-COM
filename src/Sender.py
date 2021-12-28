@@ -4,15 +4,6 @@ from time import sleep
 import threading
 
 
-def arduino_read(ser: Serial):
-    """
-    Reads data from arduino
-    :return: String
-    """
-    ser.write(bytes("A", 'utf-8'))
-    return ser.readline().decode('utf-8')
-
-
 def sender_launcher(selection, ard):
     print(f"{bcolors.HEADER}[INFO] Starting Sender{bcolors.ENDC}")
     sender = Sender(selection, ard)
@@ -37,6 +28,14 @@ class Sender:
         self.selection = selection
         self.ard = ard
 
+    def arduino_read(self):
+        """
+        Reads data from arduino
+        :return: String
+        """
+        self.ard.write(bytes("A", 'utf-8'))
+        return self.ard.readline().decode('utf-8')
+
     def sender_server(self):
         while True:
             try:
@@ -52,7 +51,7 @@ class Sender:
     def sender_arduino(self):
         while True:
             try:
-                data = arduino_read(self.ard)
+                data = self.arduino_read()
             except (KeyboardInterrupt, SystemExit):
                 raise
             except Exception:

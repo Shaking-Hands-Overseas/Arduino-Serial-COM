@@ -8,6 +8,7 @@ print('Arduino Serial Sender & Receiver \n Author: @Newtoniano20 (Joel Garcia) \
 
 
 def main():
+    ard = None
     choice = ask_user()
     if choice == 0:
         print(f"{bcolors.OKCYAN}[INFO] You have chosen Sender{bcolors.ENDC}")
