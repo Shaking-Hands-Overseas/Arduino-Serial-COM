@@ -4,7 +4,7 @@ This code was created for the Project Shaking Hands Overseas with the purpose of
 of the ocean. Any questions feel free to ask.
 """
 from src import *
-print('Arduino Serial Sender & Receiver \n Author: @Newtoniano20 (Joel Garcia) \n Github: https://github.com/Shaking-Hands-Overseas/Arduino-Serial-Sender \n')
+print(f'{bcolors.HEADER}Arduino Serial Sender & Receiver{bcolors.ENDC} \n {bcolors.OKCYAN}Author: @Newtoniano20 (Joel Garcia) {bcolors.ENDC}\n {bcolors.OKGREEN}Github: https://github.com/Shaking-Hands-Overseas/Arduino-Serial-COM {bcolors.ENDC}\n')
 
 
 def main():
