@@ -1,4 +1,5 @@
 from requests import get
+from requests.models import encode_multipart_formdata
 from .Global import *
 from json import loads
 from time import sleep
@@ -8,7 +9,7 @@ import threading
 def receiver_launcher(selection, ard):
     print(f"{bcolors.HEADER}[INFO] Starting Receiver{bcolors.ENDC}")
     receiver = Receiver(selection, ard)
-    print(f"{bcolors.OKGREEN}[INFO] Class Receiver Has been created{bcolors.ENDC}")
+    print(f"{bcolors.OKGREEN}[INFO] Object from Receiver Class Has been created{bcolors.ENDC}")
     print("[INFO] Creating Receiver Server Thread")
     receiver_server_thread = threading.Thread(target=receiver.receiver_server, args=())
     print("[INFO] Starting Receiver Server Thread")
@@ -80,7 +81,10 @@ class Receiver:
                 value = self.write_read(num)
                 print(f"[DATA] Data received Back was: {value}")
             except Exception:
-                print(f"{bcolors.WARNING}[ERROR] Error while sending data to arduino in port {SERIAL_PORTS[int(self.selection)]}{bcolors.ENDC}")
+                try:
+                    print(f"{bcolors.WARNING}[ERROR] Error while sending data to arduino in port {SERIAL_PORTS[int(self.selection)]}{bcolors.ENDC}")
+                except:
+                    pass
                 try:
                     self.ard = arduino_connect(int(self.selection), BAUDRATE)
                 except Exception:
@@ -88,6 +92,7 @@ class Receiver:
                     if self.i > 10:
                         print('\n\n')
                         self.ser = False
+                        sleep(0.6)
                         self.selection = ask_user_port()
                         try:
                             self.ard = arduino_connect(int(self.selection), BAUDRATE)

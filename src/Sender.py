@@ -7,7 +7,7 @@ import threading
 def sender_launcher(selection, ard):
     print(f"{bcolors.HEADER}[INFO] Starting Sender{bcolors.ENDC}")
     sender = Sender(selection, ard)
-    print(f"{bcolors.OKGREEN}[INFO] Class Sender Has been created{bcolors.ENDC}")
+    print(f"{bcolors.OKGREEN}[INFO] Object from Sender Class Has been created{bcolors.ENDC}")
     print("[INFO] Creating Sender Server Thread")
     sender_server_thread = threading.Thread(target=sender.sender_server, args=())
     print("[INFO] Starting Sender Server Thread")
@@ -55,7 +55,10 @@ class Sender:
             try:
                 data = self.arduino_read()
             except Exception:
-                print(f"{bcolors.WARNING}[ERROR] Error while sending data to arduino in port {SERIAL_PORTS[int(self.selection)]}{bcolors.ENDC}")
+                try:
+                    print(f"{bcolors.WARNING}[ERROR] Error while sending data to arduino in port {SERIAL_PORTS[int(self.selection)]}{bcolors.ENDC}")
+                except:
+                    pass
                 try:
                     self.ard = arduino_connect(int(self.selection), BAUDRATE)
                     self.ser = True
