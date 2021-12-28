@@ -10,9 +10,10 @@ def arduino_connect(selection: int, baudrate: int):
     print(f'{bcolors.OKCYAN}[INFO] Connecting to Serial Port {SERIAL_PORTS[int(selection)]} with {BAUDRATE} Baudrate{bcolors.ENDC}')
     try:
         ard = Serial(port=SERIAL_PORTS[int(selection)], baudrate=baudrate, timeout=.1)
-        print(f"{bcolors.OKGREEN}Connected with Arduino in serial port: {SERIAL_PORTS[int(selection)]}{bcolors.ENDC}")
+        print(f"{bcolors.OKGREEN}[INFO] Connected with Arduino in serial port: {SERIAL_PORTS[int(selection)]}{bcolors.ENDC}")
         return ard
     except Exception:
+        print(f"{bcolors.WARNING}[ERROR] Arduino not connected to serial port {SERIAL_PORTS[int(selection)]}{bcolors.ENDC}")
         raise Exception(f"{bcolors.FAIL}[ERROR] Arduino not connected to serial port {SERIAL_PORTS[int(selection)]}{bcolors.ENDC}")
 
 

@@ -21,10 +21,7 @@ def main():
             ard = arduino_connect(int(selection), BAUDRATE)
             i = False
         except Exception:
-            try:
-                print(f"{bcolors.WARNING}[ERROR] Arduino not connected to Serial port {SERIAL_PORTS[int(selection)]}{bcolors.ENDC}")
-            except Exception:
-                pass
+            pass
             selection = ask_user_port()
 
     if choice == 0:

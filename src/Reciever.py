@@ -56,8 +56,6 @@ class Receiver:
                     x = self.get_server()
                     try:
                         self.ct = loads(x.content.decode())  # Convert JSON => Dictionary Python
-                    except (KeyboardInterrupt, SystemExit):
-                        raise
                     except Exception:
                         print(f"{bcolors.WARNING}[ERROR] Error while Jsonifying content {bcolors.ENDC}")
                         self.ct = {"s1": 200, "s2": 200, "s3": 200, "s4": 200, "s5": 200}
@@ -81,8 +79,6 @@ class Receiver:
             try:
                 value = self.write_read(num)
                 print(f"[DATA] Data received Back was: {value}")
-            except (KeyboardInterrupt, SystemExit):
-                raise
             except Exception:
                 print(f"{bcolors.WARNING}[ERROR] Error while sending data to arduino in port {SERIAL_PORTS[int(self.selection)]}{bcolors.ENDC}")
                 try:
