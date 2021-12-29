@@ -10,6 +10,9 @@ You can choose from two options:
 ## Important Information:
 I recommend using my arduino Firmware, but feel free to use whatever you prefer. But in the case of creating your own firmware, it's key to understand that the data will only be sent (This applies to the sender Only) if the computer sends the letter "A" and then will respond the Arduino. So then have in mind dealing with this
 
+[Sender Firmware](https://github.com/Shaking-Hands-Overseas/Arduino-Glove-Firmware) <p></p>
+[Receiver Firmware](https://github.com/Shaking-Hands-Overseas/Arduino-Hand-Firmware)
+
 ## Installation Guide:
 1. Download the lastest version from releases in this repository or clone the repository using the following command:
 ```
