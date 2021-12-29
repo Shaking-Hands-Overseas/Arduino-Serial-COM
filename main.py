@@ -8,7 +8,6 @@ print(f'{bcolors.HEADER}Arduino Serial Sender & Receiver{bcolors.ENDC} \n {bcolo
 
 
 def main():
-    ard = None
     choice = ask_user()
     if choice == 0:
         print(f"{bcolors.OKCYAN}[INFO] You have chosen Sender{bcolors.ENDC}")
@@ -21,10 +20,7 @@ def main():
             ard = arduino_connect(int(selection), BAUDRATE)
             i = False
         except Exception:
-            try:
-                print(f"{bcolors.WARNING}[ERROR] Arduino not connected to Serial port {SERIAL_PORTS[int(selection)]}{bcolors.ENDC}")
-            except Exception:
-                pass
+            pass
             selection = ask_user_port()
 
     if choice == 0:

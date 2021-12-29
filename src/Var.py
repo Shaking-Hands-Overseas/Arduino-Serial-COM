@@ -3,7 +3,7 @@ Global Variables which are used throughout the project
 """
 
 # SERIAL PORTS: Windows = COM1, COM2, ... / Linux = /dev/ttyACM0, /dev/ttyACM1,...
-SERIAL_PORTS = ['COM1', 'COM2', 'COM3', '/dev/ttyACM0', '/dev/ttyACM1', '/dev/ttyACM2']
+SERIAL_PORTS = ['COM1', 'COM2', 'COM3', 'COM4', '/dev/ttyACM0', '/dev/ttyACM1', '/dev/ttyACM2']
 
 # API URL FOR RECEIVING DATA
 URL_R = 'https://xlbi6e.deta.dev/reciever'
