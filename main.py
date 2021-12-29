@@ -8,7 +8,6 @@ print(f'{bcolors.HEADER}Arduino Serial Sender & Receiver{bcolors.ENDC} \n {bcolo
 
 
 def main():
-    ard = None
     choice = ask_user()
     if choice == 0:
         print(f"{bcolors.OKCYAN}[INFO] You have chosen Sender{bcolors.ENDC}")

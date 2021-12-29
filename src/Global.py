@@ -18,15 +18,14 @@ def arduino_connect(selection: int, baudrate: int):
 
 
 def ask_user_port():
-    print(f"\n[0]'COM1', [1]'COM2', [2]'COM3', \n[3]'/dev/ttyACM0', [4]'/dev/ttyACM1', [5]'/dev/ttyACM2' ")
+    print(f"\n[0]'COM1', [1]'COM2', [2]'COM3', [3]'COM4', \n[4]'/dev/ttyACM0', [5]'/dev/ttyACM1', [6]'/dev/ttyACM2' ")
     response = input('Select a Serial Port:')
     try:
-        int(response)
+        if int(response) > 6:
+            print(f'{bcolors.WARNING}[ERROR] Invalid Input{bcolors.ENDC}')
+            response = None
     except Exception:
         print(f'{bcolors.WARNING}[ERROR] Invalid Input{bcolors.ENDC}')
-    if int(response) > 6:
-        print(f'{bcolors.WARNING}[ERROR] Invalid Input{bcolors.ENDC}')
-        response = None
     return response
 
 
