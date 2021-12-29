@@ -62,7 +62,7 @@ class Receiver:
                         self.ct = {"s1": 200, "s2": 200, "s3": 200, "s4": 200, "s5": 200}
                 except Exception:
                     print(f"{bcolors.WARNING}[ERROR] Error while connecting to the server {URL_R} {bcolors.ENDC}")
-                self.ct = {"s1": 200, "s2": 200, "s3": 200, "s4": 200, "s5": 200}
+                    self.ct = {"s1": 200, "s2": 200, "s3": 200, "s4": 200, "s5": 200}
 
     def receiver_arduino(self):
         sleep(2)

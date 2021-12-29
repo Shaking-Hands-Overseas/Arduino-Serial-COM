@@ -18,7 +18,7 @@ def arduino_connect(selection: int, baudrate: int):
 
 
 def ask_user_port():
-    print(f"\n[0]'COM1', [1]'COM2', [2]'COM3', [3]'COM4', \n[4]'/dev/ttyACM0', [5]'/dev/ttyACM1', [6]'/dev/ttyACM2' ")
+    print(f"\n[0]'COM1', [1]'COM2', [2]'COM3', [3]'COM4', [4]'COM5', [5]'COM6' \n[4]'/dev/ttyACM0', [5]'/dev/ttyACM1', [6]'/dev/ttyACM2' ")
     response = input('Select a Serial Port:')
     try:
         if int(response) > 6:
