@@ -67,7 +67,7 @@ class Receiver:
     def receiver_arduino(self):
         sleep(2)
         while True:
-            sleep(0.4)
+            sleep(0.2)
             cnt_index = ["s1", "s2", "s3", "s4", "s5"]  # The indices of your data in the received JSON file
             for index in cnt_index:
                 if int(self.ct[index]) < 10:  # If the number is lower than 10
