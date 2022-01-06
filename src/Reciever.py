@@ -67,19 +67,20 @@ class Receiver:
     def receiver_arduino(self):
         sleep(2)
         while True:
-            sleep(0.2)
+            sleep(0.1)
             cnt_index = ["s1", "s2", "s3", "s4", "s5"]  # The indices of your data in the received JSON file
+            print(self.ct)
             for index in cnt_index:
                 if int(self.ct[index]) < 10:  # If the number is lower than 10
-                    self.ct[index] = f"00{self.ct[index]}"  # We add two zeros to the data
+                    self.ct[index] = f"00{int(self.ct[index])}"  # We add two zeros to the data
 
                 elif int(self.ct[index]) < 100:  # If the number is lower than 100
-                    self.ct[index] = f"0{self.ct[index]}"  # We add one zero to the data
+                    self.ct[index] = f"0{int(self.ct[index])}"  # We add one zero to the data
             num = str(f'{self.ct["s1"]}{self.ct["s2"]}{self.ct["s3"]}{self.ct["s4"]}{self.ct["s5"]}')  # The String That will be sent to the arduino with the information
-
+            print(num)
             try:
                 value = self.write_read(num)
-                print(f"[DATA] Data received Back was: {value}")
+                #print(f"[DATA] Data received Back was: {value}")
             except Exception:
                 try:
                     print(f"{bcolors.WARNING}[ERROR] Error while sending data to arduino in port {SERIAL_PORTS[int(self.selection)]}{bcolors.ENDC}")
