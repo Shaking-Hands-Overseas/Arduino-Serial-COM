@@ -18,14 +18,20 @@ def arduino_connect(selection: int, baudrate: int):
 
 
 def ask_user_port():
-    print(f"\n[0]'COM1', [1]'COM2', [2]'COM3', [3]'COM4', [4]'COM5', [5]'COM6' \n[4]'/dev/ttyACM0', [5]'/dev/ttyACM1', [6]'/dev/ttyACM2' ")
+    print(f"\n[0]'COM1', [1]'COM2', [2]'COM3', [3]'COM4', [4]'COM5', [5]'COM6' \n[6]'/dev/ttyACM0', [7]'/dev/ttyACM1', [8]'/dev/ttyACM2, [9]'Other' ")
     response = input('Select a Serial Port:')
+    if len(SERIAL_PORTS) >= 10:
+        SERIAL_PORTS.pop()
     try:
-        if int(response) > 6:
+        if int(response) == len(SERIAL_PORTS):
+            serial_port = input("Enter Custom Serial Port:")
+            SERIAL_PORTS.append(serial_port)
+        elif int(response) > len(SERIAL_PORTS):
             print(f'{bcolors.WARNING}[ERROR] Invalid Input{bcolors.ENDC}')
             response = None
     except Exception:
         print(f'{bcolors.WARNING}[ERROR] Invalid Input{bcolors.ENDC}')
+    print(SERIAL_PORTS, len(SERIAL_PORTS))
     return response
 
 
