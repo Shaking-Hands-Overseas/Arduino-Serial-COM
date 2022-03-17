@@ -24,7 +24,10 @@ def sender_launcher(selection, ard):
 
 class Sender:
     def __init__(self, selection, ard):
-        self.Sender_data = {}
+        self.URL_Sender = API + URL_S
+        self.URL_Custom = API + URL_C
+        print(self.URL_Custom)
+        self.Sender_data = DATA_TEMPLATE
         self.selection = selection
         self.ard = ard
         self.i = 0
@@ -42,11 +45,16 @@ class Sender:
         while True:
             if self.ser:
                 try:
-                    req_response = post(url=URL_S, json=self.Sender_data)
+                    req_response_s = post(url=self.URL_Sender, json=self.Sender_data)
                     sleep(0.1)
-                    print(f"[INFO] Server Response: {req_response.status_code}")
                 except Exception:
-                    print(f"{bcolors.WARNING}[ERROR] Server {URL_R} not responding to request{bcolors.ENDC}")
+                    print(f"{bcolors.WARNING}[ERROR] Server {self.URL_Sender} not responding /servo to request{bcolors.ENDC}")
+                try:
+                    req_response_c = post(url=self.URL_Custom, json=PREFERED_ORDER)
+                    sleep(0.1)
+                except Exception:
+                    print(f"{bcolors.WARNING}[ERROR] Server {URL_R} not responding to /custom request{bcolors.ENDC}")
+                print(f"[INFO] Server Response: /servo : {req_response_s} ; /custom {req_response_c}")
             else:
                 sleep(1)
 
@@ -67,17 +75,19 @@ class Sender:
                     if self.i > 10:
                         print('\n\n')
                         self.ser = False
-                        sleep(0.7)
+                        sleep(1)
                         self.selection = ask_user_port()
                         try:
                             self.ard = arduino_connect(int(self.selection), BAUDRATE)
                             self.ser = True
                         except Exception:
                             pass
-            try:
-                data2 = data.split()
-                self.Sender_data = {"s1": int(data2[0]), "s2": int(data2[1]), "s3": int(data2[2]), "s4": int(data2[3]), "s5": int(data2[4])}
-                print(self.Sender_data)
-            except Exception:
-                pass
+            #try:
+            data2 = data.split()
+            for value_index in range(len(data2)):
+                self.Sender_data[f"s{value_index + 1}"] = int(data2[value_index])
+            #self.Sender_data = {"s1": int(data2[0]), "s2": int(data2[1]), "s3": int(data2[2]), "s4": int(data2[3]), "s5": int(data2[4])}
+            print(self.Sender_data)
+            #except Exception:
+            #    pass
             sleep(0.1)

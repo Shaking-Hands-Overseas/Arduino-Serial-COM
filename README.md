@@ -1,4 +1,4 @@
-# Arduino-Serial-COM
+# SHAKING HANDS OVERSEAS DRIVERArduino-Serial-COM
 This is the improved version of the Serial Receiver and Serial Sender, merging them together into a singe project.
 
 ## Overview:
@@ -31,11 +31,21 @@ and:
 ```
 pip install requests
 ```
-3. Open the file "src\Var.py" via your text editor and specify on the URL_R & URL_S Variables your API URLS.
-
-4. Change the post request according to your data, so increasing or reducing the ammount of variables "data\[n]"
+3. Open the file "src\Var.py" via your text editor and specify your API URL and routes for sending and receiving data. It should be noticed that data will be sent to you server as follows:
+```
+POST_REQUEST = {
+"s1":0,
+"s2":1,
+"s3":2,
+"s4":3,
+"s5":100
+}
+```
+And it is expected to get the information in the same way when using GET with your API.
+4. Change the prefered order and template according to your data
 
 With the above should work just fine.
 
 ## Todo List for next Versions:
 - Creating a GUI
+- Allow more than 5 data values at the same time

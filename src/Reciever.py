@@ -26,6 +26,7 @@ def receiver_launcher(selection, ard):
 
 class Receiver:
     def __init__(self, selection, ard):
+        self.URL_R = API + URL_R
         self.selection = selection
         self.ard = ard
         self.i = 0
@@ -40,9 +41,8 @@ class Receiver:
         data = self.ard.readline()
         return data
 
-    @staticmethod
-    def get_server():
-        req = get(URL_R)
+    def get_server(self):
+        req = get(self.URL_R)
         if req.status_code == "500":
             print(f"{bcolors.WARNING}[ERROR] Received status code 500{bcolors.ENDC}")
         return req

@@ -5,10 +5,32 @@ Global Variables which are used throughout the project
 # SERIAL PORTS: Windows = COM1, COM2, ... / Linux = /dev/ttyACM0, /dev/ttyACM1,...
 SERIAL_PORTS = ['COM1', 'COM2', 'COM3', 'COM4', 'COM5', 'COM6', '/dev/ttyACM0', '/dev/ttyACM1', '/dev/ttyACM2']
 
-# API URL FOR RECEIVING DATA
-URL_R = 'https://xlbi6e.deta.dev/reciever'
-# API URL FOR SENDING DATA
-URL_S = 'https://xlbi6e.deta.dev/servo'
+# MAIN SERVER URL: 
+API = 'https://xlbi6e.deta.dev'
+# API ROUTE FOR RECEIVING DATA
+URL_R = '/reciever'
+# API ROUTE FOR SENDING DATA
+URL_S = '/servo'
+# API ROUTE FOR DATA ORDER
+URL_C = '/custom'
+
+# Data template used when sending data
+DATA_TEMPLATE = {
+    "s1":200,
+    "s2":200,
+    "s3":200,
+    "s4":200,
+    "s5":200
+}
+
+# Prefered Sensor Order (Input vs Output order)
+PREFERED_ORDER = {
+    "F1": "s2",
+    "F2": "s1",
+    "F3": "s3",
+    "F4": "s4",
+    "F5": "s5"
+}
 
 # ARDUINO SERIAL BAUDRATE
 BAUDRATE = 9600

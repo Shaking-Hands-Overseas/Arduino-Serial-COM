@@ -1,5 +1,5 @@
 """
-Main Code library for Arduino Serial COM
+Main Code library for SHAKING HANDS OVERSEAS DRIVER
 """
 
 from .Var import *
