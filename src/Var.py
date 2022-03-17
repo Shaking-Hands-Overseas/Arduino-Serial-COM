@@ -6,7 +6,7 @@ Global Variables which are used throughout the project
 SERIAL_PORTS = ['COM1', 'COM2', 'COM3', 'COM4', 'COM5', 'COM6', '/dev/ttyACM0', '/dev/ttyACM1', '/dev/ttyACM2']
 
 # MAIN SERVER URL: 
-API = 'https://xlbi6e.deta.dev'
+API = ''
 # API ROUTE FOR RECEIVING DATA
 URL_R = '/reciever'
 # API ROUTE FOR SENDING DATA
