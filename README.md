@@ -1,4 +1,4 @@
-# SHAKING HANDS OVERSEAS DRIVERArduino-Serial-COM
+# SHAKING HANDS OVERSEAS DRIVER
 This is the improved version of the Serial Receiver and Serial Sender, merging them together into a singe project.
 
 ## Overview:
