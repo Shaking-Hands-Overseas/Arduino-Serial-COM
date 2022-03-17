@@ -25,8 +25,8 @@ DATA_TEMPLATE = {
 
 # Prefered Sensor Order (Input vs Output order)
 PREFERED_ORDER = {
-    "F1": "s2",
-    "F2": "s1",
+    "F1": "s1",
+    "F2": "s2",
     "F3": "s3",
     "F4": "s4",
     "F5": "s5"

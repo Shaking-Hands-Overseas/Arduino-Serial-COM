@@ -1,5 +1,4 @@
 from requests import get
-from requests.models import encode_multipart_formdata
 from .Global import *
 from json import loads
 from time import sleep
@@ -31,7 +30,7 @@ class Receiver:
         self.ard = ard
         self.i = 0
         self.ser = True
-        self.ct = {"s1": 200, "s2": 200, "s3": 200, "s4": 200, "s5": 200}
+        self.ct = DATA_TEMPLATE
 
     def write_read(self, x):
         data1 = bytes(x, 'utf-8')
@@ -59,10 +58,10 @@ class Receiver:
                         self.ct = loads(x.content.decode())  # Convert JSON => Dictionary Python
                     except Exception:
                         print(f"{bcolors.WARNING}[ERROR] Error while Jsonifying content {bcolors.ENDC}")
-                        self.ct = {"s1": 200, "s2": 200, "s3": 200, "s4": 200, "s5": 200}
+                        self.ct = DATA_TEMPLATE
                 except Exception:
                     print(f"{bcolors.WARNING}[ERROR] Error while connecting to the server {URL_R} {bcolors.ENDC}")
-                    self.ct = {"s1": 200, "s2": 200, "s3": 200, "s4": 200, "s5": 200}
+                    self.ct = DATA_TEMPLATE
 
     def receiver_arduino(self):
         sleep(2)
