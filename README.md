@@ -31,7 +31,18 @@ and:
 ```
 pip install requests
 ```
-3. Open the file "src\Var.py" via your text editor and specify your API URL and routes for sending and receiving data. It should be noticed that data will be sent to you server as follows:
+3. Open the file "src\Var.py" via your text editor and specify your API URL and routes for sending and receiving data. 
+```
+# MAIN SERVER URL: 
+API = ''
+# API ROUTE FOR RECEIVING DATA
+URL_R = '/reciever'
+# API ROUTE FOR SENDING DATA
+URL_S = '/servo'
+# API ROUTE FOR DATA ORDER
+URL_C = '/custom'
+```
+It should be noticed that data will be sent to you server as follows:
 ```
 POST_REQUEST = {
 "s1":0,
@@ -43,9 +54,25 @@ POST_REQUEST = {
 ```
 And it is expected to get the information in the same way when using GET with your API.
 4. Change the prefered order and template according to your data
+```
+DATA_TEMPLATE = {
+    "s1":200,
+    "s2":200,
+    "s3":200,
+    "s4":200,
+    "s5":200
+}
+PREFERED_ORDER = {
+    "F1": "s1",
+    "F2": "s2",
+    "F3": "s3",
+    "F4": "s4",
+    "F5": "s5"
+}
+```
 
 With the above should work just fine.
-
+5. Run the script. It will ask you whether you want to be a receiver or sender and serial port. Choose accordingly and should start working. if you notice any bug or strange behaviour, create an issue in this github page. 
 ## Todo List for next Versions:
 - Creating a GUI
 - Allow more than 5 data values at the same time
