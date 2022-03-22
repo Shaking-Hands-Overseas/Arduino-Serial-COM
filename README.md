@@ -53,6 +53,7 @@ POST_REQUEST = {
 }
 ```
 And it is expected to get the information in the same way when using GET with your API.
+
 4. Change the prefered order and template according to your data
 ```
 DATA_TEMPLATE = {
@@ -72,6 +73,7 @@ PREFERED_ORDER = {
 ```
 
 With the above should work just fine.
+
 5. Run the script. It will ask you whether you want to be a receiver or sender and serial port. Choose accordingly and should start working. if you notice any bug or strange behaviour, create an issue in this github page. 
 ## Todo List for next Versions:
 - Creating a GUI
