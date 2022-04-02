@@ -36,7 +36,7 @@ class Receiver:
         data1 = bytes(x, 'utf-8')
         # print(data1)
         self.ard.write(data1)
-        sleep(0.25)
+        sleep(0.05)
         data = self.ard.readline()
         return data
 
@@ -51,7 +51,7 @@ class Receiver:
         self.ser = True
         while True:
             if self.ser:
-                sleep(0.1)
+                sleep(0.05)
                 try:
                     x = self.get_server()
                     try:
@@ -66,7 +66,7 @@ class Receiver:
     def receiver_arduino(self):
         sleep(2)
         while True:
-            sleep(0.1)
+            sleep(0.05)
             cnt_index = ["s1", "s2", "s3", "s4", "s5"]  # The indices of your data in the received JSON file
             print(self.ct)
             for index in cnt_index:
@@ -79,7 +79,7 @@ class Receiver:
             print(num)
             try:
                 value = self.write_read(num)
-                #print(f"[DATA] Data received Back was: {value}")
+                print(f"[DATA] Data received Back was: {value}")
             except Exception:
                 try:
                     print(f"{bcolors.WARNING}[ERROR] Error while sending data to arduino in port {SERIAL_PORTS[int(self.selection)]}{bcolors.ENDC}")
