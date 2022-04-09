@@ -8,7 +8,7 @@ SERIAL_PORTS = ['COM1', 'COM2', 'COM3', 'COM4', 'COM5', 'COM6', '/dev/ttyACM0', 
 # MAIN SERVER URL: 
 API = ''
 # API ROUTE FOR RECEIVING DATA
-URL_R = '/reciever'
+URL_R = '/receiver'
 # API ROUTE FOR SENDING DATA
 URL_S = '/servo'
 # API ROUTE FOR DATA ORDER

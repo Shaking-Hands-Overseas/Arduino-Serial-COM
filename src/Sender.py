@@ -26,7 +26,6 @@ class Sender:
     def __init__(self, selection, ard):
         self.URL_Sender = API + URL_S
         self.URL_Custom = API + URL_C
-        print(self.URL_Custom)
         self.Sender_data = DATA_TEMPLATE
         self.selection = selection
         self.ard = ard
