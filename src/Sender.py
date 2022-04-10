@@ -69,12 +69,12 @@ class Sender:
         while True:
             try:
                 data = self.arduino_read()
-            except Exception:
-                print(f"{bcolors.WARNING}[ERROR] Error while sending data to arduino in port {self.SERIAL_PORTS[int(self.selection)]}{bcolors.ENDC}")
+            except serial.SerialException:
+                print(f"{bcolors.WARNING}[ERROR] Error while sending data to arduino in port {SERIAL_PORTS[int(self.selection)]}{bcolors.ENDC}")
                 try:
                     self.ard = arduino_connect(int(self.selection), self.BAUDRATE)
                     self.ser = True
-                except serial.SerialException:
+                except Exception:
                     self.i += 1
                     if self.i > 10:
                         print('\n\n')
@@ -84,7 +84,7 @@ class Sender:
                         try:
                             self.ard = arduino_connect(int(self.selection), self.BAUDRATE)
                             self.ser = True
-                        except serial.SerialException:
+                        except Exception:
                             pass
             try:
                 data2 = data.split()
