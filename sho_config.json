@@ -1,0 +1,25 @@
+{
+    "serial_port": "",
+    "Mode": "",
+    "BAUDRATE": 9600,
+    "Networking": {
+        "API_URL": "",
+        "URL_R": "/receiver",
+        "URL_S": "/servo",
+        "URL_C": "/custom",
+        "DATA_TEMPLATE": {
+            "s1": 200,
+            "s2": 200,
+            "s3": 200,
+            "s4": 200,
+            "s5": 200
+        },
+        "PREFERED_ORDER": {
+            "F1": "s1",
+            "F2": "s2",
+            "F3": "s3",
+            "F4": "s4",
+            "F5": "s5"
+        }
+    }
+}

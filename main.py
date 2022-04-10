@@ -18,7 +18,7 @@
 ###
 ### License:  MIT
 
-version= "1.2"
+version= "1.3"
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 # Imports main code library
@@ -30,25 +30,39 @@ print(f'{bcolors.HEADER}SHAKING HANDS OVERSEAS DRIVER{bcolors.ENDC} \n{bcolors.O
 
 
 def main():
-    choice = ask_user()
-    if choice == 0:
+
+    # Importing Configuration File
+    config, prefer = config_setup()
+
+    # If Mode is not defined in config file, we ask the user
+    if config["Mode"] == "" or config["Mode"] > 2 or prefer:
+        config["Mode"] = ask_user()
+    if config["Mode"] == 0:
         print(f"{bcolors.OKCYAN}[INFO] You have chosen Sender{bcolors.ENDC}")
     else:
         print(f"{bcolors.OKCYAN}[INFO] You have chosen Receiver{bcolors.ENDC}")
-    selection = ask_user_port()
-    i = True
-    while i:
+
+    # If Serial Port is not defined in config file, we ask the user
+    if config["serial_port"] == "" or prefer:
+        config["serial_port"] = ask_user_port()
+
+    # We try connecting to the arduino with specified data
+    while True:
         try:
-            ard = arduino_connect(int(selection), BAUDRATE)
-            i = False
+            ard = arduino_connect(int(config["serial_port"]), config["BAUDRATE"])
+            break
         except Exception:
-            selection = ask_user_port()
+            config["serial_port"] = ask_user_port()
 
-    if choice == 0:
-        sender_launcher(selection, ard)
+    # We save the data to the config file
+    config_write(config)
 
-    elif choice == 1:
-        receiver_launcher(selection, ard)
+    # We Start the application
+    if config["Mode"] == 0:
+        sender_launcher(config, ard)
+
+    elif config["Mode"] == 1:
+        receiver_launcher(config, ard)
 
 
 if __name__ == '__main__':
