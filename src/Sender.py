@@ -34,6 +34,7 @@ class Sender:
         :return: String
         """
         self.ard.write(bytes("A", 'utf-8'))
+        #sleep(1)
         return self.ard.readline().decode('utf-8')
 
     def sender_server(self):
