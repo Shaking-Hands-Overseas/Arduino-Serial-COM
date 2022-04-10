@@ -1,9 +1,9 @@
 {
-    "serial_port": 3,
-    "Mode": 1,
-    "BAUDRATE": 9600,
+    "serial_port": "",
+    "Mode": "",
+    "BAUDRATE": 115200,
     "Networking": {
-        "API_URL": "https://development-sho.herokuapp.com/1",
+        "API_URL": "",
         "URL_R": "/receiver",
         "URL_S": "/servo",
         "URL_C": "/custom",
