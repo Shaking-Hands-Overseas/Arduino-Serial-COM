@@ -31,6 +31,7 @@ class Sender:
         :return: String
         """
         self.ard.write(bytes("A", 'utf-8'))
+        #sleep(0.7)
         return self.ard.readline().decode('utf-8')
 
     def sender_server(self):
@@ -56,7 +57,7 @@ class Sender:
             try:
                 data = self.arduino_read()
             except Exception:
-                print(f"{bcolors.WARNING}[ERROR] Error while sending data to arduino in port {self.SERIAL_PORTS[int(self.selection)]}{bcolors.ENDC}")
+                print(f"{bcolors.WARNING}[ERROR] Error while sending data to arduino in port {SERIAL_PORTS[int(self.selection)]}{bcolors.ENDC}")
                 try:
                     self.ard = arduino_connect(int(self.selection), self.BAUDRATE)
                     self.ser = True

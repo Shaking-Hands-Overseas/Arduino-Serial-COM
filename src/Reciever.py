@@ -42,9 +42,9 @@ class Receiver:
         sleep(2)
         while True:
             if self.ser:
-                sleep(0.05)
                 try:
                     x = self.get_server()
+                    print(f"{bcolors.OKCYAN}[SERVER]{bcolors.ENDC} Response from server: {x.status_code}")
                     try:
                         self.ct = json.loads(x.content.decode())  # Convert JSON => Dictionary Python
                     except Exception:
@@ -58,7 +58,7 @@ class Receiver:
         sleep(2)
         while True:
             sleep(0.05)
-            print(self.ct)
+            print(f"{bcolors.OKGREEN}[ARDUINO]{bcolors.ENDC}{self.ct}")
             for index in self.data:
                 if int(self.ct[index]) < 10:  # If the number is lower than 10
                     self.ct[index] = f"00{int(self.ct[index])}"  # We add two zeros to the data
