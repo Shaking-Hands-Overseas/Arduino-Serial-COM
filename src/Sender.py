@@ -1,3 +1,5 @@
+import serial
+
 from .Global import *
 
 
@@ -15,10 +17,11 @@ def sender_launcher(config, ard):
 class Sender:
     def __init__(self, config, ard):
         Networking = config["Networking"]
+        self.API_URL = Networking["API_URL"]
         self.URL_Sender = Networking["API_URL"] + Networking["URL_S"]
         self.URL_Custom = Networking["API_URL"] + Networking["URL_C"]
         self.Sender_data = Networking["DATA_TEMPLATE"]
-        self.PREFERED_ORDER = Networking["PREFERED_ORDER"]
+        self.PREFERRED_ORDER = Networking["PREFERRED_ORDER"]
         self.selection = config["Mode"]
         self.BAUDRATE = config["BAUDRATE"]
         self.ard = ard
@@ -34,16 +37,21 @@ class Sender:
         return self.ard.readline().decode('utf-8')
 
     def sender_server(self):
+        """
+        Server Thread. Sends the data stored in the variable self.Sender_data
+        :return: None
+        :rtype: None
+        """
         while True:
             if self.ser:
                 try:
                     req_response_s = post(url=self.URL_Sender, json=self.Sender_data)
-                except Exception:
-                    print(f"{bcolors.WARNING}[ERROR] Server {self.URL_Sender} not responding /servo to request{bcolors.ENDC}")
+                except ConnectionError:
+                    print(f"{bcolors.WARNING}[ERROR] Server {self.API_URL} not responding /servo to request{bcolors.ENDC}")
                 try:
-                    req_response_c = post(url=self.URL_Custom, json=self.PREFERED_ORDER)
-                except Exception:
-                    print(f"{bcolors.WARNING}[ERROR] Server {self.URL_R} not responding to /custom request{bcolors.ENDC}")
+                    req_response_c = post(url=self.URL_Custom, json=self.PREFERRED_ORDER)
+                except ConnectionError:
+                    print(f"{bcolors.WARNING}[ERROR] Server {self.API_URL} not responding to /custom request{bcolors.ENDC}")
                 try:
                     print(f"{bcolors.OKCYAN}[SERVER]{bcolors.ENDC} Server Response: /servo : {req_response_s} ; /custom {req_response_c}")
                 except:
@@ -52,6 +60,11 @@ class Sender:
                 sleep(1)
 
     def sender_arduino(self):
+        """
+        Arduino Thread. Receives the data from the arduino and stores it into the variable self.Sender_data
+        :return:
+        :rtype:
+        """
         while True:
             try:
                 data = self.arduino_read()
@@ -60,7 +73,7 @@ class Sender:
                 try:
                     self.ard = arduino_connect(int(self.selection), self.BAUDRATE)
                     self.ser = True
-                except Exception:
+                except serial.SerialException:
                     self.i += 1
                     if self.i > 10:
                         print('\n\n')
@@ -70,10 +83,13 @@ class Sender:
                         try:
                             self.ard = arduino_connect(int(self.selection), self.BAUDRATE)
                             self.ser = True
-                        except Exception:
+                        except serial.SerialException:
                             pass
-            data2 = data.split()
-            for value_index in range(len(data2)):
-                self.Sender_data[f"s{value_index + 1}"] = int(data2[value_index])
+            try:
+                data2 = data.split()
+                for value_index in range(len(data2)):
+                    self.Sender_data[f"s{value_index + 1}"] = int(data2[value_index])
+            except Exception:
+                pass
             print(f"{bcolors.OKGREEN}[ARDUINO]{bcolors.ENDC}{data}")
             sleep(0.1)

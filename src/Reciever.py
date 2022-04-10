@@ -1,10 +1,18 @@
-
 from .Global import *
 
 
-def receiver_launcher(selection, ard):
+def receiver_launcher(config, ard):
+    """
+    Launches The receiver threads
+    :param config: Dictionary containing the config file
+    :type config: dict
+    :param ard: Arduino object
+    :type ard: ard object
+    :return: None
+    :rtype: None
+    """
     print(f"{bcolors.HEADER}[INFO] Starting Receiver{bcolors.ENDC}")
-    receiver = Receiver(selection, ard)
+    receiver = Receiver(config, ard)
     receiver_server_thread = threading.Thread(target=receiver.receiver_server, args=())
     print("[INFO] Starting Receiver Server Thread")
     receiver_server_thread.start()
@@ -26,24 +34,33 @@ class Receiver:
         self.BAUDRATE = config["BAUDRATE"]
         self.DATA_TEMPLATE = Networking["DATA_TEMPLATE"]
         self.ct = Networking["DATA_TEMPLATE"]
-        self.PREFERED_ORDER = Networking["PREFERED_ORDER"]
+        self.PREFERRED_ORDER = Networking["PREFERRED_ORDER"]
         self.data = list(self.DATA_TEMPLATE)
 
     def write_read(self, x):
+        """
+        Writes and reads data from the arduino
+        :param x: Data Sent to the arduino
+        :type x: string
+        :return: Data Received from the arduino
+        :rtype: string
+        """
         self.ard.write(bytes(x, 'utf-8'))
         sleep(0.05)
         return self.ard.readline()
 
-    def get_server(self):
-        req = get(self.URL_R)
-        return req
-
     def receiver_server(self):
+        """
+        Server Thread. Gets the data stored in the server and stores it into the variable self.ct
+        :return: None
+        :rtype: None
+        """
         sleep(2)
         while True:
             if self.ser:
                 sleep(0.05)
                 try:
+<<<<<<< Updated upstream
                     x = self.get_server()
                     try:
                         self.ct = json.loads(x.content.decode())  # Convert JSON => Dictionary Python
@@ -51,10 +68,21 @@ class Receiver:
                         print(f"{bcolors.WARNING}[ERROR] Error while Jsonifying content {bcolors.ENDC}")
                         self.ct = self.DATA_TEMPLATE
                 except Exception:
+=======
+                    x = get(self.URL_R)
+                    print(f"{bcolors.OKCYAN}[SERVER]{bcolors.ENDC} Response from server: {x.status_code}")
+                    self.ct = json.loads(x.content.decode())
+                except json.decoder.JSONDecodeError:
+>>>>>>> Stashed changes
                     print(f"{bcolors.WARNING}[ERROR] Error while connecting to the server {self.URL_R} {bcolors.ENDC}")
                     self.ct = self.DATA_TEMPLATE
 
     def receiver_arduino(self):
+        """
+        Arduino Thread. Sends the data to the arduino from the variable self.ct
+        :return: None
+        :rtype: None
+        """
         sleep(2)
         while True:
             sleep(0.05)

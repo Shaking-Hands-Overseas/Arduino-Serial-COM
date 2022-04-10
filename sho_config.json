@@ -1,9 +1,9 @@
 {
-    "serial_port": "",
-    "Mode": "",
+    "serial_port": 3,
+    "Mode": 1,
     "BAUDRATE": 9600,
     "Networking": {
-        "API_URL": "",
+        "API_URL": "https://development-sho.herokuapp.com/1",
         "URL_R": "/receiver",
         "URL_S": "/servo",
         "URL_C": "/custom",
@@ -14,7 +14,7 @@
             "s4": 200,
             "s5": 200
         },
-        "PREFERED_ORDER": {
+        "PREFERRED_ORDER": {
             "F1": "s1",
             "F2": "s2",
             "F3": "s3",
