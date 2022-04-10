@@ -65,6 +65,8 @@ class Receiver:
                 except json.decoder.JSONDecodeError:
                     print(f"{bcolors.WARNING}[ERROR] Error while connecting to the server {self.URL_R} {bcolors.ENDC}")
                     self.ct = self.DATA_TEMPLATE
+            else:
+                sleep(1)
 
     def receiver_arduino(self):
         """
