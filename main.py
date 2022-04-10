@@ -30,24 +30,34 @@ print(f'{bcolors.HEADER}SHAKING HANDS OVERSEAS DRIVER{bcolors.ENDC} \n{bcolors.O
 
 
 def main():
+
+    # Importing Configuration File
     config, prefer = config_setup()
+
+    # If Mode is not defined in config file, we ask the user
     if config["Mode"] == "" or config["Mode"] > 2 or prefer:
         config["Mode"] = ask_user()
     if config["Mode"] == 0:
         print(f"{bcolors.OKCYAN}[INFO] You have chosen Sender{bcolors.ENDC}")
     else:
         print(f"{bcolors.OKCYAN}[INFO] You have chosen Receiver{bcolors.ENDC}")
+
+    # If Serial Port is not defined in config file, we ask the user
     if config["serial_port"] == "" or prefer:
         config["serial_port"] = ask_user_port()
-    i = True
-    while i:
+
+    # We try connecting to the arduino with specified data
+    while True:
         try:
             ard = arduino_connect(int(config["serial_port"]), config["BAUDRATE"])
-            i = False
+            break
         except Exception:
             config["serial_port"] = ask_user_port()
+
+    # We save the data to the config file
     config_write(config)
 
+    # We Start the application
     if config["Mode"] == 0:
         sender_launcher(config, ard)
 

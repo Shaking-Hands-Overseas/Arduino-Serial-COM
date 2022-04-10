@@ -38,16 +38,14 @@ class Sender:
             if self.ser:
                 try:
                     req_response_s = post(url=self.URL_Sender, json=self.Sender_data)
-                    sleep(0.1)
                 except Exception:
                     print(f"{bcolors.WARNING}[ERROR] Server {self.URL_Sender} not responding /servo to request{bcolors.ENDC}")
                 try:
                     req_response_c = post(url=self.URL_Custom, json=self.PREFERED_ORDER)
-                    sleep(0.1)
                 except Exception:
                     print(f"{bcolors.WARNING}[ERROR] Server {self.URL_R} not responding to /custom request{bcolors.ENDC}")
                 try:
-                    print(f"[INFO] Server Response: /servo : {req_response_s} ; /custom {req_response_c}")
+                    print(f"{bcolors.OKCYAN}[SERVER]{bcolors.ENDC} Server Response: /servo : {req_response_s} ; /custom {req_response_c}")
                 except:
                     pass
             else:
@@ -77,5 +75,5 @@ class Sender:
             data2 = data.split()
             for value_index in range(len(data2)):
                 self.Sender_data[f"s{value_index + 1}"] = int(data2[value_index])
-            print(self.Sender_data)
+            print(f"{bcolors.OKGREEN}[ARDUINO]{bcolors.ENDC}{data}")
             sleep(0.1)

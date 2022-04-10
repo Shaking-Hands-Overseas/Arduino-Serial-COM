@@ -20,12 +20,14 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 def config_setup():
+    """
+    Asks if user wants to use stored settings and tries to read them from sho_config.json.
+    If file not present, we create it without data
+    """
     question = input("Do you want to import your last settings?[y/n]")
     try:
         with open('sho_config.json', 'r') as f:
-            read = f.readlines()
-            if read == "":
-                print("Config File Empty")
+            if f.readlines() == "":
                 raise Exception("File Empty")
     except:
         with open('sho_config.json', 'w') as f:
@@ -53,14 +55,14 @@ def arduino_connect(selection, baudrate):
 
 def ask_user_port():
     print(f"\n[0]'COM1', [1]'COM2', [2]'COM3', [3]'COM4', [4]'COM5', [5]'COM6' \n[6]'/dev/ttyACM0', [7]'/dev/ttyACM1', [8]'/dev/ttyACM2, [9]'Other' ")
-    response = input('Select a Serial Port:')
+    response = int(input('Select a Serial Port:'))
     if len(SERIAL_PORTS) >= 10:
         SERIAL_PORTS.pop()
     try:
-        if int(response) == len(SERIAL_PORTS):
+        if response == len(SERIAL_PORTS):
             serial_port = input("Enter Custom Serial Port:")
             SERIAL_PORTS.append(serial_port)
-        elif int(response) > len(SERIAL_PORTS):
+        elif response > len(SERIAL_PORTS):
             print(f'{bcolors.WARNING}[ERROR] Invalid Input{bcolors.ENDC}')
             response = None
     except Exception:
