@@ -1,6 +1,7 @@
+from distutils.command.config import config
 import unittest
 
-from src import *
+from ..src import *
 
 
 class Test(unittest.TestCase):
@@ -8,4 +9,5 @@ class Test(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    #unittest.main()
+    config_setup()

@@ -18,7 +18,7 @@
 ###
 ### License:  MIT
 
-version= "1.2"
+version= "1.3"
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 # Imports main code library
@@ -30,25 +30,29 @@ print(f'{bcolors.HEADER}SHAKING HANDS OVERSEAS DRIVER{bcolors.ENDC} \n{bcolors.O
 
 
 def main():
-    choice = ask_user()
-    if choice == 0:
+    config, prefer = config_setup()
+    if config["Mode"] == "" or config["Mode"] > 2 or prefer:
+        config["Mode"] = ask_user()
+    if config["Mode"] == 0:
         print(f"{bcolors.OKCYAN}[INFO] You have chosen Sender{bcolors.ENDC}")
     else:
         print(f"{bcolors.OKCYAN}[INFO] You have chosen Receiver{bcolors.ENDC}")
-    selection = ask_user_port()
+    if config["serial_port"] == "" or prefer:
+        config["serial_port"] = ask_user_port()
     i = True
     while i:
         try:
-            ard = arduino_connect(int(selection), BAUDRATE)
+            ard = arduino_connect(int(config["serial_port"]), config["BAUDRATE"])
             i = False
         except Exception:
-            selection = ask_user_port()
+            config["serial_port"] = ask_user_port()
+    config_write(config)
 
-    if choice == 0:
-        sender_launcher(selection, ard)
+    if config["Mode"] == 0:
+        sender_launcher(config, ard)
 
-    elif choice == 1:
-        receiver_launcher(selection, ard)
+    elif config["Mode"] == 1:
+        receiver_launcher(config, ard)
 
 
 if __name__ == '__main__':
