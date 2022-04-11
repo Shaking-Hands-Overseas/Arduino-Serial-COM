@@ -36,7 +36,7 @@ def main():
 
     # If Mode is not defined in config file, we ask the user
     if config["Mode"] == "" or config["Mode"] > 2 or prefer:
-        config["Mode"] = ask_user()
+        config["Mode"] = int(ask_user())
     if config["Mode"] == 0:
         print(f"{bcolors.OKCYAN}[INFO] You have chosen Sender{bcolors.ENDC}")
     else:

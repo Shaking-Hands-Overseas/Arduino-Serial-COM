@@ -24,17 +24,19 @@ class Receiver:
     def __init__(self, config, ard):
         Networking = config["Networking"]
         self.URL_R = Networking["API_URL"] + Networking["URL_R"]
+        self.URL_B = Networking["API_URL"] + Networking["URL_B"]
         self.selection = config["Mode"]
         self.ard = ard
         self.i = 0
         self.ok = True
         self.BAUDRATE = config["BAUDRATE"]
         self.DATA_TEMPLATE = Networking["DATA_TEMPLATE"]
+        self.BUTTONS = Networking["BUTTONS_TEMPLATE"]
         self.ct = Networking["DATA_TEMPLATE"]
         self.PREFERRED_ORDER = Networking["PREFERRED_ORDER"]
         self.data = list(self.DATA_TEMPLATE)
 
-    def write(self, x):
+    def write_read(self, x):
         """
         Writes and reads data from the arduino
         :param x: Data Sent to the arduino
@@ -44,7 +46,7 @@ class Receiver:
         """
         self.ard.write(bytes(x, 'utf-8'))
         sleep(0.05)
-        print(f"Received back was: {self.ard.readline()}")
+        return self.ard.readline()
 
     def receiver_server(self):
         """
@@ -82,7 +84,10 @@ class Receiver:
                     self.ct[key] = "0" + str(int(value))
             To_send = "".join(str(x) for x in self.ct.values())
             try:
-                self.write(To_send)
+                received = self.write_read(To_send).split()
+                for value_index, value in enumerate(received):
+                    self.BUTTONS[f"b{value_index + 1}"] = int(value)
+                post(self.URL_B, self.BUTTONS)
             except Exception:
                 print(f"{bcolors.WARNING}[ERROR] Error while sending data to arduino in port {SERIAL_PORTS[int(self.selection)]}{bcolors.ENDC}")
                 try:

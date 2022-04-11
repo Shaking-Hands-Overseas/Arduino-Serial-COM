@@ -32,7 +32,7 @@ def config_setup():
                 raise Exception("File Empty")
     except:
         with open('sho_config.json', 'w') as f:
-            f.write('{    \n"serial_port": "",    \n"Mode": "",    \n"BAUDRATE": 9600,    \n"Networking": {        \n"API_URL": "https://development-sho.herokuapp.com/1",        \n"URL_R": "/receiver",        \n"URL_S": "/servo",        \n"URL_C": "/custom",        \n"DATA_TEMPLATE": {            \n"s1": 200,            \n"s2": 200,            \n"s3": 200,            \n"s4": 200,            \n"s5": 200        \n},        \n"PREFERRED_ORDER": {            \n"F1": "s1",            \n"F2": "s2",            \n"F3": "s3",            \n"F4": "s4",            \n"F5": "s5"        \n}    \n}\n}')
+            f.write('{    \n"serial_port": "",    \n"Mode": "",    \n"BAUDRATE": 9600,    \n"Networking": {        \n"API_URL": "https://development-sho.herokuapp.com/1",        \n"URL_R": "/receiver",        \n"URL_S": "/servo",        \n"URL_C": "/custom",        \n"DATA_TEMPLATE": {            \n"s1": 200,            \n"s2": 200,            \n"s3": 200,            \n"s4": 200,            \n"s5": 200        \n},        \n"PREFERRED_ORDER": {            \n"F1": "s1",            \n"F2": "s2",            \n"F3": "s3",            \n"F4": "s4",            \n"F5": "s5"        \n}, "BUTTONS_TEMPLATE":{\n"b1": 0,\n"b2": 0\n}    \n}\n}')
     with open('sho_config.json', 'r') as f:
         return json.load(f), not (question == "y" or question == "Y")
 

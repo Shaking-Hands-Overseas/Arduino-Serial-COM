@@ -7,23 +7,24 @@
         "URL_R": "/receiver",
         "URL_S": "/servo",
         "URL_C": "/custom",
+        "URL_B": "/buttons",
         "DATA_TEMPLATE": {
             "s1": "200",
             "s2": "200",
             "s3": "200",
             "s4": "200",
-            "s5": "200",
-            "s6": "200",
-            "s7": "200"
+            "s5": "200"
         },
         "PREFERRED_ORDER": {
             "F1": "s1",
             "F2": "s2",
             "F3": "s3",
             "F4": "s4",
-            "F5": "s5",
-            "F6": "s6",
-            "F7": "s7"
+            "F5": "s5"
+        },
+        "BUTTONS_TEMPLATE": {
+            "b1": 0,
+            "b2": 0
         }
     }
 }
