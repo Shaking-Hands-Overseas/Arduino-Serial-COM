@@ -13,12 +13,9 @@ def receiver_launcher(config, ard):
     """
     print(f"{bcolors.HEADER}[INFO] Starting Receiver{bcolors.ENDC}")
     receiver = Receiver(config, ard)
-    receiver_server_thread = threading.Thread(target=receiver.receiver_server, args=())
-    print("[INFO] Starting Receiver Server Thread")
-    receiver_server_thread.start()
-    receiver_arduino_thread = threading.Thread(target=receiver.receiver_arduino, args=())
-    print("[INFO] Starting Receiver Arduino Thread")
-    receiver_arduino_thread.start()
+    print("[INFO] Starting Receiver Threads")
+    threading.Thread(target=receiver.receiver_server, args=()).start()
+    threading.Thread(target=receiver.receiver_arduino, args=()).start()
     print(f"{bcolors.HEADER}[INFO] Initialization Finalized Successfully{bcolors.ENDC}")
     print("---------- LOG DATA ----------")
 
@@ -30,14 +27,14 @@ class Receiver:
         self.selection = config["Mode"]
         self.ard = ard
         self.i = 0
-        self.ser = True
+        self.ok = True
         self.BAUDRATE = config["BAUDRATE"]
         self.DATA_TEMPLATE = Networking["DATA_TEMPLATE"]
         self.ct = Networking["DATA_TEMPLATE"]
         self.PREFERRED_ORDER = Networking["PREFERRED_ORDER"]
         self.data = list(self.DATA_TEMPLATE)
 
-    def write_read(self, x):
+    def write(self, x):
         """
         Writes and reads data from the arduino
         :param x: Data Sent to the arduino
@@ -47,7 +44,7 @@ class Receiver:
         """
         self.ard.write(bytes(x, 'utf-8'))
         sleep(0.05)
-        return self.ard.readline()
+        print(f"Received back was: {self.ard.readline()}")
 
     def receiver_server(self):
         """
@@ -57,11 +54,11 @@ class Receiver:
         """
         sleep(2)
         while True:
-            if self.ser:
+            if self.ok:
                 try:
-                    x = get(self.URL_R)
-                    print(f"{bcolors.OKCYAN}[SERVER]{bcolors.ENDC} Response from server: {x.status_code}")
-                    self.ct = json.loads(x.content.decode())
+                    response = get(self.URL_R)
+                    print(f"{bcolors.OKCYAN}[SERVER]{bcolors.ENDC} Response from server: {response.status_code}")
+                    self.ct = json.loads(response.content.decode())
                 except json.decoder.JSONDecodeError:
                     print(f"{bcolors.WARNING}[ERROR] Error while connecting to the server {self.URL_R} {bcolors.ENDC}")
                     self.ct = self.DATA_TEMPLATE
@@ -78,15 +75,14 @@ class Receiver:
         while True:
             sleep(0.05)
             print(f"{bcolors.OKGREEN}[ARDUINO]{bcolors.ENDC}{self.ct}")
-            for index in self.data:
-                if int(self.ct[index]) < 10:  # If the number is lower than 10
-                    self.ct[index] = f"00{int(self.ct[index])}"  # We add two zeros to the data
-
-                elif int(self.ct[index]) < 100:  # If the number is lower than 100
-                    self.ct[index] = f"0{int(self.ct[index])}"  # We add one zero to the data
-            num = str(f'{self.ct["s1"]}{self.ct["s2"]}{self.ct["s3"]}{self.ct["s4"]}{self.ct["s5"]}')  # The String That will be sent to the arduino with the information
+            for key, value in self.ct.items():
+                if len(str(int(value))) == 1:
+                    self.ct[key] = "00" + str(int(value))
+                elif len(str(int(value))) == 2:
+                    self.ct[key] = "0" + str(int(value))
+            To_send = "".join(str(x) for x in self.ct.values())
             try:
-                value = self.write_read(num)
+                self.write(To_send)
             except Exception:
                 print(f"{bcolors.WARNING}[ERROR] Error while sending data to arduino in port {SERIAL_PORTS[int(self.selection)]}{bcolors.ENDC}")
                 try:
@@ -95,11 +91,11 @@ class Receiver:
                     self.i += 1
                     if self.i > 10:
                         print('\n\n')
-                        self.ser = False
+                        self.ok = False
                         sleep(0.6)
                         self.selection = ask_user_port()
                         try:
                             self.ard = arduino_connect(int(self.selection), self.BAUDRATE)
-                            self.ser = True
+                            self.ok = True
                         except Exception:
                             pass

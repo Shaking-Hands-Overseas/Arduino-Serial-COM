@@ -39,9 +39,9 @@ def config_setup():
 
 def config_write(config):
     with open('sho_config.json', 'r+') as f:
-        f.seek(0)        # <--- should reset file position to the beginning.
+        f.seek(0) 
         json.dump(config, f, indent=4)
-        f.truncate()     # remove remaining part
+        f.truncate()
         
 
 def arduino_connect(selection, baudrate):
@@ -62,8 +62,7 @@ def ask_user_port():
         SERIAL_PORTS.pop()
     try:
         if response == len(SERIAL_PORTS):
-            serial_port = input("Enter Custom Serial Port:")
-            SERIAL_PORTS.append(serial_port)
+            SERIAL_PORTS.append(input("Enter Custom Serial Port:"))
         elif response > len(SERIAL_PORTS):
             print(f'{bcolors.WARNING}[ERROR] Invalid Input{bcolors.ENDC}')
             response = None
@@ -72,18 +71,12 @@ def ask_user_port():
     return response
 
 
-def ask_user():
-    x = True
-    choice = None
-    while x:
+def ask_user(choice = None):
+    while True:
         print('Specify whether you want to be a sender or a receiver.\n [0] Sender \n [1] Receiver')
-        try:
-            choice = int(input('\n Input:'))
-        except Exception:
-            pass
-        if choice == 0 or choice == 1:
+        choice = input('\n Input:')
+        if choice == "0" or choice == "1":
             break
         else:
             print(f'{bcolors.WARNING}[ERROR] Invalid Input{bcolors.ENDC}')
-            pass
     return choice

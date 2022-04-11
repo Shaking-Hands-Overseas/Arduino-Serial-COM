@@ -6,9 +6,8 @@ from .Global import *
 def sender_launcher(config, ard):
     print(f"{bcolors.HEADER}[INFO] Starting Sender{bcolors.ENDC}")
     sender = Sender(config, ard)
-    print("[INFO] Starting Sender Server Thread")
+    print("[INFO] Starting Sender Threads")
     threading.Thread(target=sender.sender_server, args=()).start()
-    print("[INFO] Starting Sender Arduino Thread")
     threading.Thread(target=sender.sender_arduino, args=()).start()
     print(f"{bcolors.HEADER}[INFO] Initialization Finalized Successfully{bcolors.ENDC}")
     print("---------- LOG DATA ----------")
@@ -26,7 +25,7 @@ class Sender:
         self.BAUDRATE = config["BAUDRATE"]
         self.ard = ard
         self.i = 0
-        self.ser = True
+        self.ok = True
 
     def arduino_read(self):
         """
@@ -44,7 +43,7 @@ class Sender:
         :rtype: None
         """
         while True:
-            if self.ser:
+            if self.ok:
                 try:
                     req_response_s = post(url=self.URL_Sender, json=self.Sender_data)
                 except ConnectionError:
@@ -68,29 +67,25 @@ class Sender:
         """
         while True:
             try:
-                data = self.arduino_read()
+                data = self.arduino_read().split()
             except serial.SerialException:
                 print(f"{bcolors.WARNING}[ERROR] Error while sending data to arduino in port {SERIAL_PORTS[int(self.selection)]}{bcolors.ENDC}")
                 try:
                     self.ard = arduino_connect(int(self.selection), self.BAUDRATE)
-                    self.ser = True
+                    self.ok = True
                 except Exception:
                     self.i += 1
                     if self.i > 10:
                         print('\n\n')
-                        self.ser = False
+                        self.ok = False
                         sleep(1)
                         self.selection = ask_user_port()
                         try:
                             self.ard = arduino_connect(int(self.selection), self.BAUDRATE)
-                            self.ser = True
+                            self.ok = True
                         except Exception:
                             pass
-            try:
-                data2 = data.split()
-                for value_index in range(len(data2)):
-                    self.Sender_data[f"s{value_index + 1}"] = int(data2[value_index])
-            except Exception:
-                pass
+            for value_index, value in enumerate(data):
+                self.Sender_data[f"s{value_index + 1}"] = int(value)
             print(f"{bcolors.OKGREEN}[ARDUINO]{bcolors.ENDC}{data}")
             sleep(0.1)
