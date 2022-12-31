@@ -44,7 +44,7 @@ class Sender:
                 try:
                     req_response_c = post(url=self.URL_Custom, json=self.PREFERED_ORDER)
                 except Exception:
-                    print(f"{bcolors.WARNING}[ERROR] Server {self.URL_R} not responding to /custom request{bcolors.ENDC}")
+                    print(f"{bcolors.WARNING}[ERROR] Server {self.URL_Sender} not responding to /custom request{bcolors.ENDC}")
                 try:
                     print(f"{bcolors.OKCYAN}[SERVER]{bcolors.ENDC} Server Response: /servo : {req_response_s} ; /custom {req_response_c}")
                 except:
